@@ -6,5 +6,6 @@ export class CreateBlogDto {
   readonly author: string;
   readonly comments: [string];
   readonly likes: number;
-  readonly readTime: number;
+  readonly readTime: string;
+  readonly views: number;
 }

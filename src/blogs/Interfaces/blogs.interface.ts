@@ -6,5 +6,6 @@ export interface Blog {
   author: string;
   comments: [string];
   likes: number;
-  readTime: number;
+  readTime: string;
+  views: number;
 }

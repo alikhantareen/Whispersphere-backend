@@ -1,9 +1,15 @@
-import { IsString, IsNotEmpty, IsEmail, MinLength } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsEmail,
+  MinLength,
+  IsEmpty,
+} from '@nestjs/class-validator';
 
 export class SignupDto {
   @IsNotEmpty()
   @IsString()
-  readonly name: string;
+  name: string;
 
   @IsNotEmpty()
   @IsEmail(
@@ -12,10 +18,20 @@ export class SignupDto {
       message: 'Please enter a valid email',
     },
   )
-  readonly email: string;
+  email: string;
 
   @IsNotEmpty()
   @IsString()
-  @MinLength(6)
-  readonly password: string;
+  @MinLength(6, {
+    message: 'Password should be more than 6 characters.',
+  })
+  password: string;
+
+  @IsEmpty()
+  @IsString()
+  following: [string];
+
+  @IsEmpty()
+  @IsString()
+  followers: [string];
 }

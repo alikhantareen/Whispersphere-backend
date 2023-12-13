@@ -12,6 +12,12 @@ export class User {
 
   @Prop()
   password: string;
+
+  @Prop()
+  following: [string];
+
+  @Prop()
+  followers: [string];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
