@@ -27,6 +27,11 @@ export class BlogsController {
     return this.blogServices.findOne(id);
   }
 
+  @Get('/user-profile/:id')
+  findUserBlogs(@Param('id') id): Promise<Blog[]> {
+    return this.blogServices.findUserBlogs(id);
+  }
+
   @Post()
   @UseGuards(AuthGuard())
   createBlog(@Body() createBlogDto: CreateBlogDto): Promise<Blog> {

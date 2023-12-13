@@ -6,7 +6,7 @@ export const BlogSchema = new mongoose.Schema(
     description: String,
     category: String,
     image: String,
-    athor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     comments: [String],
     likes: {
       type: Number,

@@ -15,6 +15,12 @@ export class AuthService {
   ) {}
   async signup(signupDto: SignupDto): Promise<{ token: string }> {
     const { name, email, password } = signupDto;
+    const isAlreadyRegistered = await this.userModel.findOne({ email });
+    if (isAlreadyRegistered) {
+      throw new UnauthorizedException(
+        'Email already registered. Try loggin in.',
+      );
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await this.userModel.create({
       name,
@@ -46,5 +52,14 @@ export class AuthService {
     });
 
     return { token };
+  }
+
+  async getUser(id: string): Promise<User> {
+    const user = await this.userModel.findById(id);
+    if (!user) {
+      throw new UnauthorizedException('No user found.');
+    }
+
+    return user;
   }
 }

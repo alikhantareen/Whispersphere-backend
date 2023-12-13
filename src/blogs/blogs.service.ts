@@ -16,6 +16,10 @@ export class BlogsService {
     });
   }
 
+  async findUserBlogs(id: string): Promise<Blog[]> {
+    return await this.blogModel.find({ author: id });
+  }
+
   async createBlog(blog: Blog): Promise<Blog> {
     const newBlog = new this.blogModel(blog);
     return await newBlog.save();
