@@ -7,11 +7,17 @@ import {
   Body,
   Param,
   UseGuards,
+  UploadedFile,
+  UseInterceptors,
+  Res,
 } from '@nestjs/common';
 import { BlogsService } from './blogs.service';
 import { CreateBlogDto } from './dto/create-blog-dto';
 import { Blog } from './Interfaces/blogs.interface';
 import { AuthGuard } from '@nestjs/passport';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { editFileName, imageFileFilter } from './file-upload.utils';
 
 @Controller('api/blogs')
 export class BlogsController {
@@ -30,6 +36,30 @@ export class BlogsController {
   @Get('/user-profile/:id')
   findUserBlogs(@Param('id') id): Promise<Blog[]> {
     return this.blogServices.findUserBlogs(id);
+  }
+
+  @Get('/image/:imgpath')
+  seeUploadedFile(@Param('imgpath') image, @Res() res) {
+    return res.sendFile(image, { root: './public/images/' });
+  }
+
+  @Post('/image')
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: './public/images/',
+        filename: editFileName,
+      }),
+      fileFilter: imageFileFilter,
+    }),
+  )
+  async uploadedFile(@UploadedFile() file) {
+    const response = {
+      success: true,
+      originalname: file.originalname,
+      filename: file.filename,
+    };
+    return response;
   }
 
   @Post()
