@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Blog } from './Interfaces/blogs.interface';
 import { Model } from 'mongoose';
+import { CreateCommentDto } from './dto/create-blog-dto';
 
 @Injectable()
 export class BlogsService {
@@ -35,5 +36,11 @@ export class BlogsService {
     return await this.blogModel.findByIdAndUpdate(id, blog, {
       new: true,
     });
+  }
+
+  async addComment(blog: Blog, comment: any): Promise<Blog> {
+    blog.comments.push(comment);
+    const new_blog = new this.blogModel(blog);
+    return await new_blog.save();
   }
 }

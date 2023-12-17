@@ -7,16 +7,16 @@ export const BlogSchema = new mongoose.Schema(
     category: String,
     image: String,
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    comments: [String],
-    likes: {
-      type: Number,
-      default: 0,
-    },
+    comments: [
+      {
+        user: String,
+        content: String,
+        createdAt: Date,
+      },
+    ],
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     read_time: String,
-    views: {
-      type: Number,
-      default: 0,
-    },
+    views: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   },
   {
     timestamps: true,

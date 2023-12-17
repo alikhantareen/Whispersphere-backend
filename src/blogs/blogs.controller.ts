@@ -12,7 +12,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { BlogsService } from './blogs.service';
-import { CreateBlogDto } from './dto/create-blog-dto';
+import { CreateBlogDto, CreateCommentDto } from './dto/create-blog-dto';
 import { Blog } from './Interfaces/blogs.interface';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -66,6 +66,16 @@ export class BlogsController {
   @UseGuards(AuthGuard())
   createBlog(@Body() createBlogDto: CreateBlogDto): Promise<Blog> {
     return this.blogServices.createBlog(createBlogDto);
+  }
+
+  @Post('/comment/:id')
+  @UseGuards(AuthGuard())
+  async addComment(
+    @Body() comment_data: CreateCommentDto,
+    @Param('id') id,
+  ): Promise<Blog> {
+    const blog = await this.blogServices.findOne(id);
+    return this.blogServices.addComment(blog, comment_data);
   }
 
   @Delete(':id')

@@ -9,3 +9,8 @@ export class CreateBlogDto {
   readonly readTime: string;
   readonly views: number;
 }
+
+export class CreateCommentDto {
+  readonly comment: string;
+  readonly user: string;
+}
