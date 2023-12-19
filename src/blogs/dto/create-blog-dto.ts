@@ -5,7 +5,7 @@ export class CreateBlogDto {
   readonly image: string;
   readonly author: string;
   readonly comments: [string];
-  readonly likes: number;
+  readonly likes: [string];
   readonly readTime: string;
   readonly views: number;
 }

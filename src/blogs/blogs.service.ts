@@ -1,8 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Blog } from './Interfaces/blogs.interface';
 import { Model } from 'mongoose';
-import { CreateCommentDto } from './dto/create-blog-dto';
 
 @Injectable()
 export class BlogsService {
@@ -40,6 +39,15 @@ export class BlogsService {
 
   async addComment(blog: Blog, comment: any): Promise<Blog> {
     blog.comments.push(comment);
+    const new_blog = new this.blogModel(blog);
+    return await new_blog.save();
+  }
+
+  async incrementLikes(blog: Blog, user_id: string): Promise<any> {
+    if (blog.likes.indexOf(user_id) !== -1) {
+      throw new UnauthorizedException('Already liked this post');
+    }
+    blog.likes.push(user_id);
     const new_blog = new this.blogModel(blog);
     return await new_blog.save();
   }

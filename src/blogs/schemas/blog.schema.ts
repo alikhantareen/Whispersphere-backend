@@ -14,7 +14,7 @@ export const BlogSchema = new mongoose.Schema(
         createdAt: Date,
       },
     ],
-    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    likes: [String],
     read_time: String,
     views: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   },

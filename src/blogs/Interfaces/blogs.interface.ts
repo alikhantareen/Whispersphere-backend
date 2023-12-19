@@ -5,7 +5,7 @@ export interface Blog {
   image: string;
   author: string;
   comments: [string];
-  likes: number;
+  likes: [string];
   readTime: string;
   views: number;
 }

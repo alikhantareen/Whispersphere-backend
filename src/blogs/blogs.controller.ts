@@ -78,6 +78,13 @@ export class BlogsController {
     return this.blogServices.addComment(blog, comment_data);
   }
 
+  @Post('/like/:id')
+  @UseGuards(AuthGuard())
+  async increment_likes(@Body() data: any, @Param('id') id): Promise<any> {
+    const blog = await this.blogServices.findOne(id);
+    return this.blogServices.incrementLikes(blog, data.userID);
+  }
+
   @Delete(':id')
   @UseGuards(AuthGuard())
   deleteBlog(@Param('id') id): Promise<Blog> {
