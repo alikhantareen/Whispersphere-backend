@@ -7,7 +7,7 @@ export class CreateBlogDto {
   readonly comments: [string];
   readonly likes: [string];
   readonly readTime: string;
-  readonly views: number;
+  readonly views: [string];
 }
 
 export class CreateCommentDto {

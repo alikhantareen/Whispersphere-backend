@@ -85,6 +85,13 @@ export class BlogsController {
     return this.blogServices.incrementLikes(blog, data.userID);
   }
 
+  @Post('/views/:id')
+  @UseGuards(AuthGuard())
+  async increment_views(@Body() data: any, @Param('id') id): Promise<boolean> {
+    const blog = await this.blogServices.findOne(id);
+    return this.blogServices.incrementViews(blog, data.userID);
+  }
+
   @Delete(':id')
   @UseGuards(AuthGuard())
   deleteBlog(@Param('id') id): Promise<Blog> {

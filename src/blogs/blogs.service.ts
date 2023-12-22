@@ -51,4 +51,14 @@ export class BlogsService {
     const new_blog = new this.blogModel(blog);
     return await new_blog.save();
   }
+
+  async incrementViews(blog: Blog, user_id: string): Promise<boolean> {
+    if (blog.views.indexOf(user_id) !== -1) {
+      return false;
+    }
+    blog.views.push(user_id);
+    const new_blog = new this.blogModel(blog);
+    await new_blog.save();
+    return true;
+  }
 }

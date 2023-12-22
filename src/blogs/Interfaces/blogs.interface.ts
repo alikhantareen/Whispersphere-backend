@@ -7,5 +7,5 @@ export interface Blog {
   comments: [string];
   likes: [string];
   readTime: string;
-  views: number;
+  views: [string];
 }
